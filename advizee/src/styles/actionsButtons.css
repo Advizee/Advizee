@@ -1,0 +1,44 @@
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.action-buttons.center {
+  justify-content: center;
+}
+
+.action-buttons.right {
+  justify-content: flex-end;
+}
+
+.btn.primary {
+  background: #2563eb;
+  color: white;
+  padding: 0.9rem 1.6rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn.primary:hover {
+  background: #1e40af;
+}
+
+.btn.whatsapp {
+  background: #25d366;
+  color: white;
+  padding: 0.9rem 1.6rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.btn.whatsapp:hover {
+  background: #1ebe5b;
+}
