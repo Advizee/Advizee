@@ -122,7 +122,7 @@ const Navbar: React.FC = () => {
         </ul>
 
         <Link to="/login">
-          <button className="login-btn">Login</button>
+          <button className="login-btn">Advizee Login</button>
         </Link>
       </div>
     </nav>
