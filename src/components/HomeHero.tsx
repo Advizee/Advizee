@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/homeHero.css";
-import { Link } from "react-router-dom";
+
 import member1 from "../assets/test1.png";
 import member2 from "../assets/test2.jpeg";
 import member3 from "../assets/test3.jpeg";

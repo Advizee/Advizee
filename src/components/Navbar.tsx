@@ -6,7 +6,8 @@ import { ChevronDown } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const closeTimeout = useRef<NodeJS.Timeout | null>(null);
+  // ✅ Fixed: Use ReturnType<typeof setTimeout> instead of NodeJS.Timeout
+  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
 
