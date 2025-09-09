@@ -1,20 +1,17 @@
-.schedule {
-  text-align: center;
-  padding: 4rem 2rem;
-  background: linear-gradient(to right, #f9fafb, #ffffff);
-}
-
+/* ===== Base Schedule Section (for popup content too) ===== */
 .schedule-title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: #1a202c;
+  text-align: center;
 }
 
 .schedule-subtitle {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-bottom: 2rem;
   color: #4a5568;
+  text-align: center;
 }
 
 .schedule-options {
@@ -29,7 +26,7 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 1.5rem 2.5rem;
+  padding: 1.2rem 2rem;
   border-radius: 12px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -38,7 +35,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 180px;
+  min-width: 160px;
   justify-content: center;
 }
 
@@ -55,17 +52,13 @@
   background: #4285f4;
 }
 
-.zoom {
-  background: #2d8cff;
-}
-
 .outlook {
   background: #0078d4;
 }
 
 /* Form */
 .schedule-form {
-  max-width: 500px;
+  max-width: 450px;
   margin: 0 auto;
   text-align: left;
 }
@@ -106,4 +99,71 @@
 
 .confirm-btn:hover {
   background: #1e40af;
+}
+
+/* ===== Popup Overlay ===== */
+/* ===== Popup Overlay ===== */
+.popup-overlay {
+  position: fixed;
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* higher so it sits on top of everything */
+}
+
+/* ===== Popup Box ===== */
+.popup-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh; /* prevent overflow if screen small */
+  overflow-y: auto; /* allow scroll inside if content large */
+  position: relative;
+  animation: popup-zoom 0.3s ease;
+}
+
+@keyframes popup-zoom {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #444;
+}
+
+/* ===== Confirmation Box ===== */
+.confirmation-box {
+  text-align: center;
+}
+
+.confirmation-box h2 {
+  color: #2563eb;
+  margin-bottom: 1rem;
+}
+
+/* Clickable meeting link */
+.meeting-link {
+  color: #2563eb;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.meeting-link:hover {
+  color: #1e40af;
 }
