@@ -1,0 +1,29 @@
+import React from "react";
+import Schedule from "./pages/Schedule";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Loans from "./pages/Loans";
+import CreditCard from "./pages/CreditCard";
+import Blog from "./pages/Blog";
+import About from "./pages/About";
+import Login from "./pages/Login";
+
+const App: React.FC = () => {
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/loans" element={<Loans />} />
+        <Route path="/credit-card" element={<CreditCard />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </>
+  );
+};
+
+export default App;
