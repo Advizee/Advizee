@@ -1,16 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { createPortal } from "react-dom";
+import Schedule from "../pages/Schedule";
 
 interface ActionButtonsProps {
   className?: string; // allow passing hero-buttons / guidance-buttons
 }
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({ className }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className={className}>
-      <Link to="/schedule">
-        <button className="btn primary">Schedule a Meeting</button>
-      </Link>
+      <button className="btn primary" onClick={() => setOpen(true)}>
+        Schedule a Meeting
+      </button>
 
       <a
         href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`}
@@ -20,6 +23,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ className }) => {
       >
         Chat on WhatsApp
       </a>
+
+      {open &&
+        createPortal(
+          <Schedule onClose={() => setOpen(false)} />,
+          document.body
+        )}
     </div>
   );
 };
