@@ -8,7 +8,7 @@ import CreditCard from "./pages/CreditCard";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
 import Login from "./pages/Login";
-
+import Signup from "./pages/Signup"; 
 const App: React.FC = () => {
   return (
     <>
@@ -21,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </>
   );
