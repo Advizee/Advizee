@@ -4,18 +4,18 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Loans from "./pages/Loans";
-import CreditCard from "./pages/CreditCard";
+import CreditCard from "./pages/Creditcard.tsx";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup"; 
+import Login from "./pages/Login.tsx";
+import Signup from "./pages/Signup.tsx"; 
 const App: React.FC = () => {
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/schedule" element={<Schedule onClose={() => { /* handle close */ }} />} />
         <Route path="/loans" element={<Loans />} />
         <Route path="/credit-card" element={<CreditCard />} />
         <Route path="/blog" element={<Blog />} />

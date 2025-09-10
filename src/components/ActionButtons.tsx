@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import Schedule from "../pages/Schedule";
+import "../styles/actionsButtons.css";
 
 interface ActionButtonsProps {
-  className?: string; // allow passing hero-buttons / guidance-buttons
+  className?: string; // allows passing hero-buttons / guidance-cta
 }
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({ className }) => {
