@@ -1,5 +1,5 @@
 name: Build and Deploy to Plesk via FTP (ensure pnpm)
-
+#Deploy
 on:
   workflow_dispatch:
 
