@@ -1,28 +1,37 @@
 .guidance {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 3rem;
-  padding: 4rem 2rem;
+  gap: 2rem;
+  padding: 3rem 2rem;
   background: #f9fafb;
+  flex-wrap: wrap;
 }
 
 .guidance-left {
   flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .guidance-card {
   background: #fff;
-  padding: 1.5rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 .guidance-img {
-  width: auto;
-  height: 150px;
+  width: 250px;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.guidance-img:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 
 .guidance-right {
@@ -39,42 +48,24 @@
 .guidance-text {
   font-size: 1.1rem;
   color: #4a5568;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
-.guidance-buttons {
+.guidance-counter {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2563eb;
+}
+
+.guidance-counter span {
+  font-size: 1.6rem;
+  color: #1e40af;
+}
+
+.guidance-cta {
   display: flex;
   gap: 1rem;
-}
-
-.btn.primary {
-  background: #2563eb;
-  color: white;
-  padding: 0.9rem 1.6rem;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.btn.primary:hover {
-  background: #1e40af;
-}
-
-.btn.whatsapp {
-  background: #25d366;
-  color: white;
-  padding: 0.9rem 1.6rem;
-  border-radius: 10px;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: background 0.3s ease;
-}
-
-.btn.whatsapp:hover {
-  background: #1ebe5b;
+  flex-wrap: wrap;
 }

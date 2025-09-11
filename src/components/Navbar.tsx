@@ -6,29 +6,20 @@ import { ChevronDown } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  // ✅ Fixed: Use ReturnType<typeof setTimeout> instead of NodeJS.Timeout
   const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
 
-  // 🔽 Hide on scroll down / Show on scroll up
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > lastScrollY.current) {
-        setHidden(true); // scrolling down → hide navbar
-      } else {
-        setHidden(false); // scrolling up → show navbar
-      }
+      setHidden(window.scrollY > lastScrollY.current);
       lastScrollY.current = window.scrollY;
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleDropdown = (name: string) => {
-    setOpenDropdown(openDropdown === name ? null : name);
-  };
+  const toggleDropdown = (name: string) => setOpenDropdown(openDropdown === name ? null : name);
 
   const handleMouseEnter = (name: string) => {
     if (closeTimeout.current) clearTimeout(closeTimeout.current);
@@ -36,46 +27,23 @@ const Navbar: React.FC = () => {
   };
 
   const handleMouseLeave = (name: string) => {
-    if (openDropdown === name) {
-      closeTimeout.current = setTimeout(() => {
-        setOpenDropdown(null);
-      }, 200);
-    }
+    if (openDropdown === name) closeTimeout.current = setTimeout(() => setOpenDropdown(null), 200);
   };
 
   return (
     <nav className={`navbar ${hidden ? "navbar-hidden" : ""}`}>
-      {/* Logo */}
-      <div className="logo">
-        <Link to="/">
-          <img src={logo} alt="Advizee Logo" />
-        </Link>
-      </div>
+      <div className="logo"><Link to="/"><img src={logo} alt="Advizee Logo" /></Link></div>
 
-      {/* Nav Links */}
       <div className="nav-right">
         <ul className="nav-links">
-          {/* Loans Dropdown */}
-          <li
-            className={`dropdown ${openDropdown === "loans" ? "active" : ""}`}
-            onMouseEnter={() => handleMouseEnter("loans")}
-            onMouseLeave={() => handleMouseLeave("loans")}
-          >
-            <button
-              className="dropdown-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleDropdown("loans");
-              }}
-            >
+          <li className={`dropdown ${openDropdown === "loans" ? "active" : ""}`}
+              onMouseEnter={() => handleMouseEnter("loans")}
+              onMouseLeave={() => handleMouseLeave("loans")}>
+            <button className="dropdown-btn" onClick={e => { e.stopPropagation(); toggleDropdown("loans"); }}>
               Loans <ChevronDown size={14} className="chevron" />
             </button>
             {openDropdown === "loans" && (
-              <ul
-                className="dropdown-menu"
-                onMouseEnter={() => handleMouseEnter("loans")}
-                onMouseLeave={() => handleMouseLeave("loans")}
-              >
+              <ul className="dropdown-menu">
                 <li><Link to="/loans">Personal Loan</Link></li>
                 <li><Link to="/loans">Home Loan</Link></li>
                 <li><Link to="/loans">Business Loan</Link></li>
@@ -86,27 +54,14 @@ const Navbar: React.FC = () => {
             )}
           </li>
 
-          {/* Credit Cards Dropdown */}
-          <li
-            className={`dropdown ${openDropdown === "cards" ? "active" : ""}`}
-            onMouseEnter={() => handleMouseEnter("cards")}
-            onMouseLeave={() => handleMouseLeave("cards")}
-          >
-            <button
-              className="dropdown-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleDropdown("cards");
-              }}
-            >
+          <li className={`dropdown ${openDropdown === "cards" ? "active" : ""}`}
+              onMouseEnter={() => handleMouseEnter("cards")}
+              onMouseLeave={() => handleMouseLeave("cards")}>
+            <button className="dropdown-btn" onClick={e => { e.stopPropagation(); toggleDropdown("cards"); }}>
               Credit Card <ChevronDown size={14} className="chevron" />
             </button>
             {openDropdown === "cards" && (
-              <ul
-                className="dropdown-menu"
-                onMouseEnter={() => handleMouseEnter("cards")}
-                onMouseLeave={() => handleMouseLeave("cards")}
-              >
+              <ul className="dropdown-menu">
                 <li><Link to="/credit-card">Lifetime Free Credit Card</Link></li>
                 <li><Link to="/credit-card">CashBack Credit Card</Link></li>
                 <li><Link to="/credit-card">Travel Credit Card</Link></li>
@@ -116,13 +71,12 @@ const Navbar: React.FC = () => {
             )}
           </li>
 
-          {/* Blog & About */}
           <li><Link className="nav-btn" to="/blog">Blog</Link></li>
           <li><Link className="nav-btn" to="/about">About</Link></li>
         </ul>
 
         <Link to="/login">
-          <button className="login-btn">Login</button>
+          <button className="login-btn">Advizee Login</button>
         </Link>
       </div>
     </nav>

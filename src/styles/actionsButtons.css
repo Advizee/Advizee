@@ -1,44 +1,38 @@
-.action-buttons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.action-buttons.center {
-  justify-content: center;
-}
-
-.action-buttons.right {
-  justify-content: flex-end;
-}
-
-.btn.primary {
-  background: #2563eb;
-  color: white;
-  padding: 0.9rem 1.6rem;
-  border: none;
-  border-radius: 10px;
+/* Buttons (used in HomeHero and Guidance) */
+.btn {
+  padding: 0.9rem 1.8rem;
+  border-radius: 50px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+  transform: translateY(0) scale(1);
 }
 
 .btn.primary:hover {
-  background: #1e40af;
+  background: linear-gradient(135deg, #1e40af, #2563eb);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
 }
 
 .btn.whatsapp {
-  background: #25d366;
-  color: white;
-  padding: 0.9rem 1.6rem;
-  border-radius: 10px;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: background 0.3s ease;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+  transform: translateY(0) scale(1);
 }
 
 .btn.whatsapp:hover {
-  background: #1ebe5b;
+  background: linear-gradient(135deg, #1da851, #128c7e);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(37, 211, 102, 0.4);
 }
