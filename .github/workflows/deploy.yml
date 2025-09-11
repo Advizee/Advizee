@@ -28,7 +28,7 @@ jobs:
         with:
           version: 8   # set whichever major version you want; omit to get latest
 
-      - name: Debug: show Node/pnpm info and PATH
+      - name: Debug show Node/pnpm info and PATH
         run: |
           echo "node -> $(node -v)"
           echo "npm  -> $(npm -v)"
