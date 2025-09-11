@@ -1,4 +1,4 @@
-name: Build and Deploy to Plesk via FTP (npm)
+name: Build and deploy
 
 on:
   workflow_dispatch:
@@ -24,7 +24,6 @@ jobs:
         uses: actions/cache@v4
         id: npm-cache
         with:
-          # Cache node_modules and npm cache keyed by package.json content
           path: |
             ~/.npm
             node_modules
@@ -42,12 +41,12 @@ jobs:
           echo "→ Running build"
           npm run build
 
-      - name: Show dist contents (sanity)
+      - name: dist contents
         run: |
           echo "→ Dist dir listing:"
           ls -la ${{ env.DIST_DIR }}
 
-      - name: Deploy via FTP to Plesk
+      - name: Deploy to Plesk
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_HOST }}
