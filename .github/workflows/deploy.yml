@@ -1,4 +1,4 @@
-name: Build and Deploy to Plesk via FTP (pnpm)
+name: Build and Deploy to Plesk via FTP (ensure pnpm)
 
 on:
   workflow_dispatch:
@@ -19,23 +19,39 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'pnpm'    
-          
-      - name: Ensure pnpm is installed (corepack preferred)
+          cache: 'pnpm'    # optional
+
+      # Try the pnpm action first (official)
+      - name: Setup pnpm (official action)
+        id: pnpm-setup
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8   # set whichever major version you want; omit to get latest
+
+      - name: Debug: show Node/pnpm info and PATH
         run: |
-          echo "→ Check Node & corepack"
-          node -v
-          npm -v
+          echo "node -> $(node -v)"
+          echo "npm  -> $(npm -v)"
+          echo "yarn -> $(yarn -v || echo 'yarn not found')"
+          echo "PATH: $PATH"
+          echo "which pnpm: $(which pnpm || echo 'pnpm not found')"
+          pnpm -v || echo "pnpm command failed or pnpm not installed"
+
+      # If pnpm still isn't available, enable corepack or install globally
+      - name: Ensure pnpm exists (corepack fallback / global install)
+        if: ${{ failure() && steps['pnpm-setup'].outcome != 'success' }} # fallback only if previous pnpm action failed
+        run: |
+          set -e
+          echo "pnpm action did not succeed — trying corepack then global install"
           if command -v corepack >/dev/null 2>&1; then
-            echo "corepack exists → enabling and preparing pnpm"
+            echo "Using corepack to prepare pnpm"
             corepack enable
-            # choose a pnpm version your project expects (or omit version to get latest)
-            corepack prepare pnpm@8.8.0 --activate || corepack prepare pnpm@latest --activate
+            corepack prepare pnpm@8 --activate || corepack prepare pnpm@latest --activate
           else
-            echo "corepack not found → installing pnpm globally"
+            echo "corepack not available — installing pnpm globally"
             npm install -g pnpm
           fi
-          echo "pnpm version:"
+          echo "which pnpm: $(which pnpm || echo 'still not found')"
           pnpm -v
 
       - name: Restore pnpm store cache
