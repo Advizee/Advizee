@@ -1,4 +1,4 @@
-name: Build and Deploy to Plesk via FTP
+name: Build and Deploy to Plesk via FTP (pnpm)
 
 on:
   workflow_dispatch:
@@ -7,7 +7,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      BUILD_COMMAND: npm ci && npm run build
       DIST_DIR: dist
 
     steps:
@@ -16,15 +15,38 @@ jobs:
         with:
           ref: main
 
-      - name: Setup Node.js (remove or change if not a Node project)
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'pnpm' 
 
-      - name: Install & Build
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8 
+
+      - name: Restore pnpm store cache
+        uses: actions/cache@v4
+        id: pnpm-cache
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-store-
+
+      - name: Install dependencies (pnpm)
         run: |
-          echo "→ Running build command"
-          $BUILD_COMMAND
+          if [ -f pnpm-lock.yaml ]; then
+            echo "pnpm-lock.yaml found → running frozen install"
+            pnpm install --frozen-lockfile --store ~/.pnpm-store
+          else
+            echo "No pnpm-lock.yaml found → running pnpm install"
+            pnpm install --store ~/.pnpm-store
+          fi
+
+      - name: Build (pnpm)
+        run: pnpm build
 
       - name: Show dist contents (sanity)
         run: |
