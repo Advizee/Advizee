@@ -1,5 +1,5 @@
-name: Build and Deploy to Plesk via FTP (ensure pnpm)
-#Deploy
+name: Build and Deploy to Plesk via FTP (npm)
+
 on:
   workflow_dispatch:
 
@@ -7,7 +7,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      DIST_DIR: dist
+      DIST_DIR: dist    
 
     steps:
       - name: Checkout main
@@ -19,62 +19,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'pnpm'    # optional
 
-      # Try the pnpm action first (official)
-      - name: Setup pnpm (official action)
-        id: pnpm-setup
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8   # set whichever major version you want; omit to get latest
-
-      - name: Debug show Node/pnpm info and PATH
-        run: |
-          echo "node -> $(node -v)"
-          echo "npm  -> $(npm -v)"
-          echo "yarn -> $(yarn -v || echo 'yarn not found')"
-          echo "PATH: $PATH"
-          echo "which pnpm: $(which pnpm || echo 'pnpm not found')"
-          pnpm -v || echo "pnpm command failed or pnpm not installed"
-
-      # If pnpm still isn't available, enable corepack or install globally
-      - name: Ensure pnpm exists (corepack fallback / global install)
-        if: ${{ failure() && steps['pnpm-setup'].outcome != 'success' }} # fallback only if previous pnpm action failed
-        run: |
-          set -e
-          echo "pnpm action did not succeed — trying corepack then global install"
-          if command -v corepack >/dev/null 2>&1; then
-            echo "Using corepack to prepare pnpm"
-            corepack enable
-            corepack prepare pnpm@8 --activate || corepack prepare pnpm@latest --activate
-          else
-            echo "corepack not available — installing pnpm globally"
-            npm install -g pnpm
-          fi
-          echo "which pnpm: $(which pnpm || echo 'still not found')"
-          pnpm -v
-
-      - name: Restore pnpm store cache
+      - name: Cache npm
         uses: actions/cache@v4
-        id: pnpm-cache
+        id: npm-cache
         with:
-          path: ~/.pnpm-store
-          key: pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          # Cache node_modules and npm cache keyed by package.json content
+          path: |
+            ~/.npm
+            node_modules
+          key: npm-cache-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            pnpm-store-
+            npm-cache-
 
-      - name: Install dependencies (pnpm)
+      - name: Install dependencies (npm)
         run: |
-          if [ -f pnpm-lock.yaml ]; then
-            echo "pnpm-lock.yaml found → running frozen install"
-            pnpm install --frozen-lockfile --store ~/.pnpm-store
-          else
-            echo "No pnpm-lock.yaml found → running pnpm install"
-            pnpm install --store ~/.pnpm-store
-          fi
+          echo "→ Installing dependencies with npm"
+          npm install
 
-      - name: Build (pnpm)
-        run: pnpm build
+      - name: Build
+        run: |
+          echo "→ Running build"
+          npm run build
 
       - name: Show dist contents (sanity)
         run: |
